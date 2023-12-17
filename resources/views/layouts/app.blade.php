@@ -12,7 +12,7 @@
     <nav>
         <ul>
             <li><a href="{{ route('home') }}">Главная</a></li>
-            <li><a href="{{ route('data') }}">Посмотреть все данные</a></li>
+            <li><a href="{{ route('posts.index') }}">Список постов</a></li>
             <li><a href="{{ route('about') }}">О нас</a></li>
         </ul>
     </nav>
