@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use App\Models\Post;
+use App\Http\Controllers\Controller;
+use App\Http\Resources\PostResource;
 use App\Models\Category;
-use Illuminate\Support\Facades\Validator;
+use App\Models\Post;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Response;
 
 class PostController extends Controller
 {
@@ -20,18 +22,32 @@ class PostController extends Controller
         $posts = $query->get();
         $categories = Category::all();
 
+        if ($request->wantsJson()) {
+            return Response::json(['posts' => $posts, 'categories' => $categories]);
+        }
+
         return view('posts.index', compact('posts', 'categories'));
     }
 
     public function show(Post $post)
-    {   
+    {
         $comments = $post->comments;
+
+        if (request()->wantsJson()) {
+            return Response::json(['post' => $post, 'comments' => $comments]);
+        }
+
         return view('posts.show', compact('post', 'comments'));
     }
 
     public function create()
     {
         $categories = Category::all();
+
+        if (request()->wantsJson()) {
+            return Response::json(['categories' => $categories]);
+        }
+
         return view('posts.create', compact('categories'));
     }
 
@@ -49,13 +65,21 @@ class PostController extends Controller
             'category_id' => $request->input('category_id'),
         ]);
 
+        if ($request->wantsJson()) {
+            return new PostResource($post);
+        }
+
         return redirect()->route('posts.index')->with('successMessage', 'Пост успешно создан!');
     }
-
 
     public function edit(Post $post)
     {
         $categories = Category::all();
+
+        if (request()->wantsJson()) {
+            return Response::json(['post' => $post, 'categories' => $categories]);
+        }
+
         return view('posts.edit', compact('post', 'categories'));
     }
 
@@ -73,6 +97,10 @@ class PostController extends Controller
             'category_id' => $request->input('category_id'),
         ]);
 
+        if ($request->wantsJson()) {
+            return new PostResource($post);
+        }
+
         return redirect()->route('posts.index')->with('successMessage', 'Пост успешно обновлен!');
     }
 
@@ -80,6 +108,10 @@ class PostController extends Controller
     {
         $post->comments()->delete();
         $post->delete();
+
+        if (request()->wantsJson()) {
+            return response()->json(['message' => 'Пост и связанные комментарии успешно удалены!']);
+        }
 
         return redirect()->route('posts.index')->with('successMessage', 'Пост и связанные комментарии успешно удалены!');
     }
