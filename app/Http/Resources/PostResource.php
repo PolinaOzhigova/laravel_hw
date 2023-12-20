@@ -15,6 +15,8 @@ class PostResource extends JsonResource
             'created_at' => $this->created_at->format('Y-m-d H:i:s'),
             'category' => new CategoryResource($this->whenLoaded('category')),
             'comments' => CommentResource::collection($this->whenLoaded('comments')),
+            'status' => $this->status,
+            'publish_at' => $this->publish_at->format('Y-m-d H:i:s'),
             'deleted_at' => $this->when(isset($this->deleted_at), $this->deleted_at),
         ];
     }

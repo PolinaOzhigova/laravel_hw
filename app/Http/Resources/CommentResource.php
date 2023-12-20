@@ -12,6 +12,7 @@ class CommentResource extends JsonResource
             'id' => $this->id,
             'content' => $this->content,
             'created_at' => $this->created_at->format('Y-m-d H:i:s'),
+            'is_approved' => $this->is_approved,
             'deleted_at' => $this->when(isset($this->deleted_at), $this->deleted_at),
         ];
     }

@@ -30,8 +30,8 @@
             <p style="color: red;">{{ $message }}</p>
         @enderror
 
-        <button type="submit">Отправить</button>
-    </form>
+        <button type="submit" name="action" value="drafts">Сохранить как черновик</button>
+        <button type="submit" name="action" value="create">Опубликовать</button>
 
-    <a href="{{ route('posts.index') }}">Назад к списку постов</a>
+    </form>
 @endsection

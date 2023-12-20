@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Comment extends Model
 {
     use SoftDeletes;
-    protected $fillable = ['post_id', 'content'];
+    protected $fillable = ['post_id', 'content', 'is_approved'];
 
     public function post()
     {

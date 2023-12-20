@@ -27,5 +27,6 @@
         <button type="submit">Обновить</button>
     </form>
 
-    <a href="{{ route('posts.index') }}">Назад к списку постов</a>
+    <a href="{{ route('posts.index') }}">Перейти в блог</a>
+    <a href="{{ route('posts.drafts') }}">Назад в черновики</a>
 @endsection
